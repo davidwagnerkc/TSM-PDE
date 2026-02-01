@@ -3,7 +3,7 @@ SITE_PKGS=$(python -c "import site; print(site.getsitepackages()[0])")
 export LD_LIBRARY_PATH=$SITE_PKGS/nvidia/cudnn/lib:$SITE_PKGS/nvidia_cudnn9/nvidia/cudnn/lib:${LD_LIBRARY_PATH:-}
 export PATH=$SITE_PKGS/nvidia/cuda_nvcc/bin:$PATH
 
-export TRAINING_DATA_SEED=909  # I used 909-916 for the paper
+export TRAINING_DATA_SEED=${TRAINING_DATA_SEED:-909}
 export PYTHONPATH="$PWD:$PYTHONPATH"
 export CUDA_VISIBLE_DEVICES=0,1,2,3  # ,4,5,6,7
 export XLA_PYTHON_CLIENT_PREALLOCATE=false
