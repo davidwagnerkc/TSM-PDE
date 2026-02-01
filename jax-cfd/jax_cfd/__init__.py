@@ -16,4 +16,15 @@
 
 __version__ = '0.1.0'
 
+# Compatibility shims for deprecated JAX APIs
+import jax
+import jax.numpy as jnp
+import jax.core
+if not hasattr(jnp, 'DeviceArray'):
+  jnp.DeviceArray = jax.Array
+if not hasattr(jax, 'ShapedArray'):
+  jax.ShapedArray = jax.core.ShapedArray
+if not hasattr(jax, 'tree_multimap'):
+  jax.tree_multimap = jax.tree_util.tree_map
+
 import jax_cfd.base
