@@ -4,7 +4,7 @@ export LD_LIBRARY_PATH=$SITE_PKGS/nvidia/cudnn/lib:$SITE_PKGS/nvidia_cudnn9/nvid
 export PATH=$SITE_PKGS/nvidia/cuda_nvcc/bin:$PATH
 
 export PYTHONPATH="$PWD:$PYTHONPATH"
-export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 export XLA_PYTHON_CLIENT_PREALLOCATE=false
 export HAIKU_FLATMAPPING=0
 

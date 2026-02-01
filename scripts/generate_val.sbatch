@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=tsm-pde-generation
-#SBATCH --nodelist=kc-sse-ml-rn03,kc-sse-ml-rn04,kc-sse-ml-rn05
+#SBATCH --job-name=tsm-pde-generation-val
+#SBATCH --nodelist=kc-sse-ml-rn04,kc-sse-ml-rn05
 #SBATCH --partition=research
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:4
