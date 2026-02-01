@@ -16,7 +16,6 @@ python -u tsm/dns_generate.py \
   --model_input_size=2048 \
   --model_encode_steps=1 \
   --model_predict_steps=32 \
-  --predict_log_every=32 \
   --simulation_time=20.0 \
   --delta_time=0.007012483601762931 \
   --predict_split="$STORAGE_PATH/$PREDICTDATA" \
