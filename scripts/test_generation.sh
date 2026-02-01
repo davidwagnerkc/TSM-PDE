@@ -12,7 +12,7 @@ export MODEL_NAME=dns_2048x2048_test
 export PREDICTDATA=models/${MODEL_NAME}/predict.nc
 export STORAGE_PATH=$PSCRATCH/cfd
 
-python -u tsm/dns_warmup.py \
+python -u tsm/dns_generate.py \
   --model_input_size=2048 \
   --model_encode_steps=1 \
   --model_predict_steps=32 \
