@@ -24,7 +24,16 @@ if not hasattr(jnp, 'DeviceArray'):
   jnp.DeviceArray = jax.Array
 if not hasattr(jax, 'ShapedArray'):
   jax.ShapedArray = jax.core.ShapedArray
-if not hasattr(jax, 'tree_multimap'):
-  jax.tree_multimap = jax.tree_util.tree_map
+# jax.tree_* top-level aliases were removed in jax>=0.4.26 (gone entirely by the
+# modern jax used for the 5090). Restore the ones jax-cfd calls at runtime.
+for _alias, _impl in (
+    ('tree_map', jax.tree_util.tree_map),
+    ('tree_multimap', jax.tree_util.tree_map),
+    ('tree_leaves', jax.tree_util.tree_leaves),
+    ('tree_flatten', jax.tree_util.tree_flatten),
+    ('tree_unflatten', jax.tree_util.tree_unflatten),
+):
+  if not hasattr(jax, _alias):
+    setattr(jax, _alias, _impl)
 
 import jax_cfd.base

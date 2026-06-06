@@ -1,0 +1,52 @@
+[project]
+name = "tsm-pde-datagen"
+version = "0.1.0"
+description = "TSM-PDE DNS data-generation environment (JAX/jax-cfd stack), uv-managed, separate from the torch training repo."
+requires-python = ">=3.12,<3.13"
+
+# MODIFIED FOR THE 5090 (Blackwell / sm_120): the original env pinned jax 0.4.17,
+# which predates Blackwell and cannot run on these GPUs. We instead use a modern
+# jax[cuda12] (CUDA 12.8) so generation runs on the 5090. jax-cfd is old and uses
+# JAX APIs removed in >=0.4.26 (jax.tree_map etc.) — a compat shim in
+# jax-cfd/jax_cfd/__init__.py bridges those. Bit-exact same-seed reproduction vs
+# the original 0.4.17 dataset is to be validated separately. The original pins
+# remain in requirements_working.txt / environment.yml for reference.
+dependencies = [
+    "jax[cuda12]",
+    "jax-cfd",            # local editable, see [tool.uv.sources]
+    "dm-haiku",
+    "jmp",
+    "optax",
+    "flax",
+    "gin-config",
+    "einops",
+    "tree-math",
+    "numpy",
+    "scipy",
+    "xarray",
+    "h5py",
+    "h5netcdf",           # xarray .nc engine used by readers/converter
+    "tensorflow-cpu",     # dns_generate/dns_warmup use tf.compat.v1.flags only; cpu avoids cuda-wheel clashes with jax
+    "tensorflow-datasets", # imported by tsm/pde_dataset.py
+    "tqdm",
+    "matplotlib",
+    "seaborn",
+    "pillow",
+    "scikit-image",
+    "absl-py",
+    "setuptools<81",      # dns_generate/dns_warmup import pkg_resources (removed in setuptools>=81)
+    "torch",              # tsm/pde_dataset.py imports torch; CPU build (compute is JAX) via pytorch-cpu index
+]
+
+[tool.uv]
+# Environment-only project (the tsm/ scripts are run via PYTHONPATH, not packaged).
+package = false
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+jax-cfd = { path = "jax-cfd", editable = true }
+torch = { index = "pytorch-cpu" }
